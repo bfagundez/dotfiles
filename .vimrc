@@ -1,25 +1,27 @@
 " Vim Plug (this has to be the first thing on the init.vim)
 call plug#begin()
+Plug 'Chiel92/vim-autoformat'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'cloudhead/neovim-fuzzy'
+Plug 'dyng/ctrlsf.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'junegunn/vim-github-dashboard'
+Plug 'kchmck/vim-coffee-script'
 Plug 'morhetz/gruvbox'
-Plug 'numkil/ag.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-sensible'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'thanethomson/vim-jenkinsfile'
-Plug 'tpope/vim-surround'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'thanethomson/vim-jenkinsfile'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-haml'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
-Plug 'Chiel92/vim-autoformat'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " final settings for color scheme
@@ -29,7 +31,7 @@ colorscheme onedark
 let g:airline_theme="papercolor"
 let mapleader = " "
 map <Leader>\ :NERDTreeToggle<CR>
-map <C-S-f> :Ag<space>
+map <C-S-f> :CtrlSF<space>
 nnoremap <CR> :noh<CR><CR>
 
 " Use deoplete.
@@ -57,6 +59,7 @@ set laststatus=2                  " always show status bar
 set list listchars=tab:»·,trail:· " show extra space characters
 "set nofoldenable                  " disable code folding
 set foldlevel=1
+set foldmethod=syntax
 set foldclose=all
 set nowrap                        " disable visible word wrap
 "set clipboard=unnamed             " use the system clipboard
