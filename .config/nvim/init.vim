@@ -6,7 +6,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'cloudhead/neovim-fuzzy'
 Plug 'dyng/ctrlsf.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'flazz/vim-colorschemes'
+Plug 'ggvgc/vim-fuzzysearch'
 Plug 'junegunn/vim-github-dashboard'
 Plug 'kchmck/vim-coffee-script'
 Plug 'morhetz/gruvbox'
@@ -23,12 +25,14 @@ Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'edkolev/tmuxline.vim'
 call plug#end()
 
 " final settings for color scheme
-colorscheme spring-night
-
+"colorscheme spring-night
+colorscheme gruvbox
+set background=dark
+let g:gruvbox_contrast_dark='soft'
+let g:gruvbox_italicize_strings=1
 let g:airline_theme="papercolor"
 let mapleader = " "
 map <Leader>\ :NERDTreeToggle<CR>
@@ -80,6 +84,10 @@ syntax enable
 
 " fuzzy search
 nnoremap <C-p> :FuzzyOpen<CR>
+
+" fuzzy search in file
+nnoremap / :FuzzySearch<CR>
+let g:fuzzysearch_prompt = '/'
 
 " indent guides
 let g:indentLine_enabled = 1
