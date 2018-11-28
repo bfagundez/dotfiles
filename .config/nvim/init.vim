@@ -5,26 +5,27 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'cloudhead/neovim-fuzzy'
+Plug 'craigemery/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'ggvgc/vim-fuzzysearch'
-Plug 'junegunn/vim-github-dashboard'
 Plug 'kchmck/vim-coffee-script'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/syntastic'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'thanethomson/vim-jenkinsfile'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-haml'
+Plug 'leafgarland/typescript-vim'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
-Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
+Plug 'kshenoy/vim-signature'
+Plug 'justinmk/vim-sneak'
 call plug#end()
 
 " final settings for color scheme
@@ -33,7 +34,7 @@ colorscheme gruvbox
 set background=dark
 let g:gruvbox_contrast_dark='soft'
 let g:gruvbox_italicize_strings=1
-let g:airline_theme="papercolor"
+let g:airline_theme="base16"
 let mapleader = " "
 map <Leader>\ :NERDTreeToggle<CR>
 map <C-S-f> :CtrlSF<space>
@@ -41,9 +42,6 @@ nnoremap <CR> :noh<CR><CR>
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-
-" Markdown preview
-let vim_markdown_preview_hotkey='<C-m>'
 
 " Other conf
 set termguicolors
@@ -54,7 +52,6 @@ set expandtab                     " use spaces, not tab characters
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
-set cursorline                    " highlight current line
 set smartcase                     " pay attention to case when caps are used
 set incsearch                     " show search results as I type
 set mouse=a                       " enable mouse support
@@ -62,19 +59,22 @@ set vb                            " enable visual bell (disable audio bell)
 set ruler                         " show row and column in footer
 set laststatus=2                  " always show status bar
 set list listchars=tab:»·,trail:· " show extra space characters
-"set nofoldenable                  " disable code folding
 set foldlevel=1
 set foldmethod=syntax
 set foldclose=all
 set nowrap                        " disable visible word wrap
-"set clipboard=unnamed             " use the system clipboard
+
 " Remove trailing whitespace automatically on save
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritePre :set expandtab<CR> :retab<CR>
+
 " airline
 let g:airline_powerline_fonts = 1
-let g:airline_powerline_section_b = '%{strftime("%c")}'
-
+let g:airline_powerline_section_b = '%strftime("%c")}'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#ale#enabled = 0
 set shiftwidth=2 softtabstop=2
 set number
 
@@ -86,13 +86,21 @@ syntax enable
 nnoremap <C-p> :FuzzyOpen<CR>
 
 " fuzzy search in file
-nnoremap / :FuzzySearch<CR>
+map <Leader>f :FuzzySearch<CR>
 let g:fuzzysearch_prompt = '/'
 
 " indent guides
 let g:indentLine_enabled = 1
 let g:indentLine_color_term = 254
 let g:indentLine_char = '┆'
+
+" Ale linting
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_open_list = 0
+let g:ale_keep_list_window_open = 1
 
 " Mouse Support
 if has('mouse')
@@ -105,5 +113,8 @@ nnoremap <silent> vv <C-w>v
 " Reload files when changed
 set autoread
 au CursorHold * checktime
+
+" Custom commands
+command PrettyJson :%!python -m json.tool
 
 filetype plugin on
