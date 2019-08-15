@@ -3,16 +3,17 @@ call plug#begin()
 Plug 'Chiel92/vim-autoformat'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdcommenter'
 Plug 'bling/vim-airline'
+Plug 'pangloss/vim-javascript'
 Plug 'cloudhead/neovim-fuzzy'
 Plug 'craigemery/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'ggvgc/vim-fuzzysearch'
-Plug 'kchmck/vim-coffee-script'
-Plug 'morhetz/gruvbox'
-Plug 'scrooloose/nerdcommenter'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'thanethomson/vim-jenkinsfile'
@@ -21,24 +22,33 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-haml'
 Plug 'leafgarland/typescript-vim'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'kshenoy/vim-signature'
 Plug 'justinmk/vim-sneak'
+Plug 'jparise/vim-graphql'
+Plug 'posva/vim-vue'
+Plug 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
 call plug#end()
 
 " final settings for color scheme
 "colorscheme spring-night
-colorscheme gruvbox
+colorscheme palenight
 set background=dark
-let g:gruvbox_contrast_dark='soft'
-let g:gruvbox_italicize_strings=1
-let g:airline_theme="base16"
+let g:airline_theme="luna"
 let mapleader = " "
+set ttimeoutlen=20
 map <Leader>\ :NERDTreeToggle<CR>
 map <C-S-f> :CtrlSF<space>
 nnoremap <CR> :noh<CR><CR>
+"Sorround maps
+nnoremap cs ysiw
+nnoremap ds ysiy
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -63,7 +73,7 @@ set foldlevel=1
 set foldmethod=syntax
 set foldclose=all
 set nowrap                        " disable visible word wrap
-
+set backupcopy=yes
 " Remove trailing whitespace automatically on save
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritePre :set expandtab<CR> :retab<CR>
@@ -81,6 +91,7 @@ set number
 " syntax general settings
 syntax on
 syntax enable
+syntax sync minlines=200
 
 " fuzzy search
 nnoremap <C-p> :FuzzyOpen<CR>
@@ -102,6 +113,9 @@ let g:ale_set_quickfix = 1
 let g:ale_open_list = 0
 let g:ale_keep_list_window_open = 1
 
+" NerdTree
+let NERDTreeShowHidden=1
+
 " Mouse Support
 if has('mouse')
 set mouse=a
@@ -116,5 +130,6 @@ au CursorHold * checktime
 
 " Custom commands
 command PrettyJson :%!python -m json.tool
-
+noremap <f1> :bprev<CR>
+noremap <f2> :bnext<CR>
 filetype plugin on
