@@ -29,11 +29,16 @@ Plug 'w0rp/ale'
 Plug 'kshenoy/vim-signature'
 Plug 'justinmk/vim-sneak'
 Plug 'jparise/vim-graphql'
-Plug 'posva/vim-vue'
+Plug 'leafOfTree/vim-vue-plugin'
 Plug 'mattn/gist-vim'
 Plug 'mattn/webapi-vim'
 Plug 'tyru/open-browser.vim'
 Plug 'tyru/open-browser-github.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'alvan/vim-closetag'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 " final settings for color scheme
@@ -49,6 +54,23 @@ nnoremap <CR> :noh<CR><CR>
 "Sorround maps
 nnoremap cs ysiw
 nnoremap ds ysiy
+
+" closetag extensions
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue,*.jsx'
+" Shortcut for closing tags, default is '>'
+let g:closetag_shortcut = '>'
+" Add > at current position without closing the current tag, default is ''
+let g:closetag_close_shortcut = '<leader>>'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsSnippetsDir = '/Users/geekymartian/.codeSnippets/'
+let g:UltiSnipsSnippetDirectories = ['/Users/geekymartian/.codeSnippets']
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
