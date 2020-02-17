@@ -1,0 +1,35 @@
+# JEST
+snippet describe "JEST describe"
+describe('$1', () => {
+	it('$2', () => {
+		$0
+	})
+})
+endsnippet
+
+snippet it "JEST it"
+it('$1', () => {
+	$0
+})
+endsnippet
+
+snippet req "require"
+require('$1')
+endsnippet
+
+# Graphql
+snippet gqlq "Grahpql Query"
+query $1($2) {
+	$3($4){
+		$0
+	}
+}
+endsnippet
+
+snippet cls "console.log with separators"
+console.log('\n\n\n\n CONSOLE LOG \n ------=======------- \n',$1,'\n\n\n\n')
+endsnippet
+snippet cl "console.log"
+console.log($1)
+endsnippet
+

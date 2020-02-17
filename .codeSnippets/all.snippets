@@ -1,0 +1,12 @@
+snippet type "prisma type"
+type $1 {
+  id: ID! @id
+  $2
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+endsnippet
+
+snippet relation "prisma relation"
+$1: $2 @relation(link: TABLE, name: "$3")
+endsnippet
