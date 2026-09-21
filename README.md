@@ -36,8 +36,6 @@ but tmux is otherwise fine.
 
 ### Other external bits
 
-- `` ` `` + `g` opens `~/workspace/tmux-agent-dashboard/bin/dashboard`. Personal tool,
-  not in this repo — the binding just errors if the path is missing.
-- The omarchy-only keybinding popup (`omarchy-menu-tmux-keybindings`) is stripped from
-  this copy so the config is portable. All bindings carry `-N` descriptions, so
-  `` ` `` + `?` still lists them via tmux's own built-in binding.
+The omarchy-only keybinding popup (`omarchy-menu-tmux-keybindings`) is stripped from
+this copy so the config is portable. All bindings carry `-N` descriptions, so
+`` ` `` + `?` still lists them via tmux's own built-in binding.
