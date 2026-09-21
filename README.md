@@ -21,6 +21,19 @@ Rust status line. It is *not* on crates.io and it is configured by editing its o
 Rust source, so it has to be built from a clone:
 
 ```sh
+./scripts/install-muxbar.sh
+```
+
+It is idempotent, so it is also the fix when a machine has drifted. To diagnose
+without changing anything:
+
+```sh
+./scripts/install-muxbar.sh --check
+```
+
+The script does the following by hand-equivalent steps:
+
+```sh
 git clone https://github.com/Dlurak/muxbar.git ~/workspace/muxbar
 cd ~/workspace/muxbar
 git checkout 96b5d86                                    # base this config was built on
@@ -28,6 +41,10 @@ cp ~/workspace/dotfiles/.config/tmux/muxbar/gpu.rs modules/src/modules/gpu.rs
 git apply ~/workspace/dotfiles/.config/tmux/muxbar/local-changes.patch
 cargo install --path .                                  # installs to ~/.cargo/bin/muxbar
 ```
+
+If the bar still shows a scrolling "Muxbar" after installing, tmux is holding the
+old binary: `tmux kill-server`. The GPU module renders only where `nvidia-smi`
+works, and its icon needs a Nerd Font in the terminal.
 
 `local-changes.patch` + `gpu.rs` are my customizations on top of upstream: drops the
 "Muxbar" text module, adds a GPU memory module, and wires up its icon. Without them
