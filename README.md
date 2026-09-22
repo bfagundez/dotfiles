@@ -38,6 +38,7 @@ git clone https://github.com/Dlurak/muxbar.git ~/workspace/muxbar
 cd ~/workspace/muxbar
 git checkout 96b5d86                                    # base this config was built on
 cp ~/workspace/dotfiles/.config/tmux/muxbar/gpu.rs modules/src/modules/gpu.rs
+cp ~/workspace/dotfiles/.config/tmux/muxbar/disk.rs modules/src/modules/disk.rs
 git apply ~/workspace/dotfiles/.config/tmux/muxbar/local-changes.patch
 cargo install --path .                                  # installs to ~/.cargo/bin/muxbar
 ```
@@ -46,8 +47,9 @@ If the bar still shows a scrolling "Muxbar" after installing, tmux is holding th
 old binary: `tmux kill-server`. The GPU module renders only where `nvidia-smi`
 works, and its icon needs a Nerd Font in the terminal.
 
-`local-changes.patch` + `gpu.rs` are my customizations on top of upstream: drops the
-"Muxbar" text module, adds a GPU memory module, and wires up its icon. Without them
+`local-changes.patch` + `gpu.rs` + `disk.rs` are my customizations on top of upstream:
+drops the "Muxbar" text module, adds GPU memory and disk-free modules, and wires up
+their icons. Without them
 you get upstream's default modules; without muxbar entirely, `status-right` is blank
 but tmux is otherwise fine.
 

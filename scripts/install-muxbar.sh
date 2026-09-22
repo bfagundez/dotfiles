@@ -16,6 +16,7 @@ MUXBAR_REPO=https://github.com/Dlurak/muxbar.git
 
 DOTFILES=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 GPU_RS="$DOTFILES/.config/tmux/muxbar/gpu.rs"
+DISK_RS="$DOTFILES/.config/tmux/muxbar/disk.rs"
 PATCH="$DOTFILES/.config/tmux/muxbar/local-changes.patch"
 
 GPU_ICON=$'\U000f08ae'   # 󰢮 nf-md-expansion_card_variant
@@ -59,6 +60,9 @@ check() {
         [ -f "$MUXBAR_SRC/modules/src/modules/gpu.rs" ] \
             && ok "gpu.rs present" \
             || { bad "gpu.rs missing - patch was never applied"; rc=1; }
+        [ -f "$MUXBAR_SRC/modules/src/modules/disk.rs" ] \
+            && ok "disk.rs present" \
+            || { bad "disk.rs missing - patch was never applied"; rc=1; }
         grep -q 'GpuMemory' "$MUXBAR_SRC/src/config.rs" 2>/dev/null \
             && ok "GpuMemory wired into config.rs" \
             || { bad "config.rs has no GpuMemory - unpatched source"; rc=1; }
@@ -98,6 +102,12 @@ check() {
         bad "no GPU module in output"
         rc=1
     fi
+    if printf '%s' "$out" | grep -qF '󰋊'; then
+        ok "disk module present"
+    else
+        bad "no disk module in output"
+        rc=1
+    fi
 
     say "tmux"
     if command -v tmux >/dev/null 2>&1 && tmux info >/dev/null 2>&1; then
@@ -121,6 +131,7 @@ check() {
 
 install() {
     [ -f "$GPU_RS" ] || { bad "missing $GPU_RS"; exit 1; }
+    [ -f "$DISK_RS" ] || { bad "missing $DISK_RS"; exit 1; }
     [ -f "$PATCH" ]  || { bad "missing $PATCH"; exit 1; }
     command -v cargo >/dev/null 2>&1 || { bad "cargo not found - install Rust first"; exit 1; }
 
@@ -142,6 +153,7 @@ install() {
 
     say "Applying local changes"
     cp "$GPU_RS" "$MUXBAR_SRC/modules/src/modules/gpu.rs"
+    cp "$DISK_RS" "$MUXBAR_SRC/modules/src/modules/disk.rs"
     git -C "$MUXBAR_SRC" apply "$PATCH"
 
     say "Building (cargo install --path .)"

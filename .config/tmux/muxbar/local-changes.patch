@@ -1,25 +1,27 @@
 diff --git i/modules/src/icons.rs w/modules/src/icons.rs
-index 71565c3..d2ddd0f 100644
+index 71565c3..de304e2 100644
 --- i/modules/src/icons.rs
 +++ w/modules/src/icons.rs
-@@ -17,6 +17,7 @@ pub enum Icon {
+@@ -17,6 +17,8 @@ pub enum Icon {
      TripleServer,
      Cpu,
      Tmux,
 +    Gpu,
++    Disk,
  }
  
  impl From<char> for Icon {
-@@ -71,6 +72,7 @@ impl fmt::Display for Icon {
+@@ -71,6 +73,8 @@ impl fmt::Display for Icon {
              Self::TripleServer => write!(f, "󰒋"),
              Self::Cpu => write!(f, ""),
              Self::Tmux => write!(f, ""),
 +            Self::Gpu => write!(f, "󰢮"),
++            Self::Disk => write!(f, "󰋊"),
          }
      }
  }
 diff --git i/modules/src/modules/mod.rs w/modules/src/modules/mod.rs
-index 53e3508..1bcd444 100644
+index 53e3508..97725db 100644
 --- i/modules/src/modules/mod.rs
 +++ w/modules/src/modules/mod.rs
 @@ -7,7 +7,7 @@ macro_rules! modules {
@@ -27,17 +29,17 @@ index 53e3508..1bcd444 100644
  }
  
 -modules![battery, cpu, datetime, memory, tmux, uptime, warning, text];
-+modules![battery, cpu, datetime, gpu, memory, tmux, uptime, warning, text];
++modules![battery, cpu, datetime, disk, gpu, memory, tmux, uptime, warning, text];
  
  use crate::{colors::Style, icons::Icon, outputter::Outputter};
  use std::{fmt, time::Duration};
 diff --git i/src/config.rs w/src/config.rs
-index 47319bb..3b2ab30 100644
+index 47319bb..d2d16d8 100644
 --- i/src/config.rs
 +++ w/src/config.rs
 @@ -1,11 +1,9 @@
 -use modules::modules::{Battery, Cpu, DateTime, Memory, Text, TmuxContent, Warning};
-+use modules::modules::{Battery, Cpu, DateTime, GpuMemory, Memory, TmuxContent, Warning};
++use modules::modules::{Battery, Cpu, DateTime, DiskFree, GpuMemory, Memory, TmuxContent, Warning};
  use modules::{modules::ToModule, Color, Icon, Module, Style};
  use std::time::Duration;
  
@@ -48,10 +50,11 @@ index 47319bb..3b2ab30 100644
          Some(
              Module::from(DateTime::date_without_year())
                  .set_icon(Some(Icon::Calendar))
-@@ -14,6 +12,7 @@ pub fn get_modules() -> Vec<Module<Box<dyn ToModule>>> {
+@@ -14,6 +12,8 @@ pub fn get_modules() -> Vec<Module<Box<dyn ToModule>>> {
          Some(DateTime::new("%H:%M:%S").into()),
          Some(Cpu::new(2, 2).into()),
          Some(Memory::new(2, 2).into()),
++        Some(DiskFree::new(2, 1).into()),
 +        GpuMemory::try_new(2, 2).map(Into::into),
          Battery::try_new(2).ok().flatten().map(Into::into),
          Some(TmuxContent::SessionName.into()),
